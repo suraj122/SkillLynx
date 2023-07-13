@@ -22,6 +22,11 @@ function Courses() {
           type="text"
           placeholder="Enter Price"
         />
+        <input
+          className="block w-full border border-royal-green-600 py-3 px-6 rounded my-4 text-royal-green-600 text-md"
+          type="text"
+          placeholder="Enter Image Link"
+        />
         <textarea
           className="block w-full border border-royal-green-600 py-3 px-6 rounded my-4 text-royal-green-600 text-md"
           rows="4"
