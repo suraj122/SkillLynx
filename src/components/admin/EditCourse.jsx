@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 
-function Courses() {
-  const [title, setTitle] = useState("");
-  const [tag, setTag] = useState("");
-  const [price, setPrice] = useState(0);
-  const [imgLink, setImgLink] = useState("https://source.unsplash.com/random");
-  const [description, setDescription] = useState("");
-  const [published, setPublished] = useState(false);
+function EditCourse() {
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
-
+  const course = useLocation().state.course;
+  const [title, setTitle] = useState(course.title);
+  const [tag, setTag] = useState(course.tag);
+  const [price, setPrice] = useState(course.price);
+  const [imgLink, setImgLink] = useState(course.imgLink);
+  const [description, setDescription] = useState(course.description);
+  const [published, setPublished] = useState(course.published);
+  const id = useParams().id;
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { title, tag, price, imgLink, description, published };
     axios
-      .post("http://localhost:3000/admin/courses", data, {
+      .put(`http://localhost:3000/admin/courses/${id}`, data, {
         headers: {
           authorization: token,
         },
@@ -25,12 +26,12 @@ function Courses() {
         setMessage(res.data.message);
         setTitle("");
         setTag("");
-        setPrice("");
+        setPrice(0);
         setDescription("");
         setImgLink("https://source.unsplash.com/random");
         setPublished(false);
       })
-      .catch((err) => setMessage(err.message));
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -38,7 +39,7 @@ function Courses() {
       {token ? (
         <>
           <h1 className="text-center text-royal-green-900 font-bold text-xl">
-            Create Course
+            Edit Course
           </h1>
           {message ? (
             <div className="text-center mt-4">
@@ -105,7 +106,7 @@ function Courses() {
                 onClick={(e) => handleSubmit(e)}
                 className="px-6 py-3 text-md bg-royal-green-900 text-white rounded w-full"
               >
-                Create
+                Update
               </button>
             </div>
           </form>
@@ -124,4 +125,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default EditCourse;
