@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function CourseCard({ course, type }) {
-  console.log(type);
   return (
     <Link
       to={

@@ -1,6 +1,20 @@
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import axios from "axios";
 
 function Navbar() {
+  const [user, setUser] = useState("");
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/users/me", {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => setUser(res.data))
+      .catch((err) => console.error(err));
+  }, []);
   return (
     <>
       <header className="py-6 border-b border-royal-green-600">
@@ -26,22 +40,47 @@ function Navbar() {
                 Course
               </Link>
             </li>
-            <li className="ml-6">
-              <Link
-                className="text-md text-royal-green-900  hover:text-gold-900"
-                to="/login"
-              >
-                Login
-              </Link>
-            </li>
-            <li className="ml-6">
-              <Link
-                className="text-md  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
-                to="/signup"
-              >
-                Register
-              </Link>
-            </li>
+            {user ? (
+              <>
+                <li className="ml-6">
+                  <Link
+                    className="text-md text-royal-green-900  hover:text-gold-900"
+                    to="/login"
+                  >
+                    {user}
+                  </Link>
+                </li>
+                <li className="ml-6">
+                  <button
+                    className="text-md  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                    }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="ml-6">
+                  <Link
+                    className="text-md text-royal-green-900  hover:text-gold-900"
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li className="ml-6">
+                  <Link
+                    className="text-md  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
+                    to="/signup"
+                  >
+                    Register
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </header>

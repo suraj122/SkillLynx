@@ -13,7 +13,6 @@ function Courses() {
         .catch((err) => console.error(err));
     }, 1000);
   }, []);
-  console.log(courses);
   return (
     <section className="container mx-auto px-6 py-12">
       <header className="">

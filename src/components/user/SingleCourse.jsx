@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 function SingleCourse() {
   const [course, setCourse] = useState({});
   const id = useParams().id;
+  const token = localStorage.getItem("token");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     axios
@@ -14,6 +16,18 @@ function SingleCourse() {
       )
       .catch((err) => console.error(err));
   }, []);
+
+  const handleClick = () => {
+    axios
+      .post(`http://localhost:3000/users/courses/${id}`, null, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((res) => setMessage(res.data.message))
+      .catch((err) => console.error(err));
+  };
+
   return (
     <section>
       <header
@@ -35,8 +49,19 @@ function SingleCourse() {
               ₹{course.price}
             </strong>
           </div>
+          {message ? (
+            <h1 className="text-xl font-bold text-gold-900 mt-24 text-center">
+              {message}
+              <Link to="/user">Go to your dashbaord</Link>
+            </h1>
+          ) : (
+            ""
+          )}
           <footer className="mt-4">
-            <button className="btn mt-4 !border-white !text-white inline-block">
+            <button
+              onClick={handleClick}
+              className="btn mt-4 !border-white !text-white inline-block"
+            >
               Buy Course
             </button>
           </footer>
