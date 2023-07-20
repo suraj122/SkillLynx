@@ -28,7 +28,7 @@ function Navbar() {
   }, []);
   return (
     <>
-      <header className="py-6 border-b border-royal-green-600">
+      <header className="py-6 bg-fade-pink border-royal-green-600">
         <nav className="container flex justify-between items-center mx-auto px-8">
           <Link className="text-lg" to="/">
             <strong className="text-gold-900">Skill</strong>

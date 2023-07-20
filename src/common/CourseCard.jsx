@@ -11,7 +11,7 @@ function CourseCard({ course, type }) {
           : `/admin/courses/${course._id}`
       }
     >
-      <article className="border border-royal-green-600 rounded-md">
+      <article className="border border-royal-green-600 rounded-md h-full">
         <header
           className="px-6 py-16 rounded-t-md bg-cover bg-center"
           style={{

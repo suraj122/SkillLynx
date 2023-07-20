@@ -8,10 +8,13 @@ export default {
       },
       colors: {
         gold: {
+          300: "#FEF6EA",
           900: "#F19A33",
         },
         "royal-green": {
+          300: "#DDF3F6",
           600: "#657782",
+          700: "#50A0BE",
           900: "#12373F",
         },
         "fade-pink": "#FEFBFB",
