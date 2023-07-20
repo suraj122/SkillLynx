@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../../common/RecoilAtom";
 
 function SingleCourse() {
   const [course, setCourse] = useState({});
   const id = useParams().id;
   const token = localStorage.getItem("token");
   const [message, setMessage] = useState("");
+  const user = useRecoilValue(userAtom);
 
   useEffect(() => {
     axios
@@ -52,7 +55,7 @@ function SingleCourse() {
           {message ? (
             <h1 className="text-xl font-bold text-gold-900 mt-24 text-center">
               {message}
-              <Link to="/user">Go to your dashbaord</Link>
+              <Link to={`/${user}/dashboard`}>Go to your dashbaord</Link>
             </h1>
           ) : (
             ""

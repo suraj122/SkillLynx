@@ -1,7 +1,7 @@
 function Home() {
   return (
     <section className="py-14">
-      <article className="container mx-auto px-6 grid grid-cols-2">
+      <article className="container mx-auto px-6 grid grid-cols-2 gap-8">
         <div>
           <h1 className="text-5xl text-royal-green-900 font-extrabold leading-normal">
             Grow Your Skills, <br />

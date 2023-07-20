@@ -1,23 +1,30 @@
 import { Link } from "react-router-dom";
-import Course from "../../common/CourseCard";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CourseCard from "../../common/CourseCard";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userCourseAtom } from "../../common/RecoilAtom";
+import jwt_decode from "jwt-decode";
 
 function Dashboard() {
   const token = localStorage.getItem("token");
-  const [courses, setCourses] = useState([]);
+  const userCourses = useRecoilValue(userCourseAtom);
+  const setUserCourses = useSetRecoilState(userCourseAtom);
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/users/purchasedCourses", {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => {
-        setCourses(res.data.purchasedCourses);
-      })
-      .catch((err) => console.error(err));
+    if (token) {
+      if (jwt_decode(token).role === "user") {
+        axios
+          .get("http://localhost:3000/users/purchasedCourses", {
+            headers: {
+              authorization: token,
+            },
+          })
+          .then((res) => {
+            setUserCourses(res.data.purchasedCourses);
+          })
+          .catch((err) => console.error(err));
+      }
+    }
   }, []);
   return (
     <section className="container mx-auto px-6 py-12">
@@ -29,13 +36,13 @@ function Dashboard() {
           Expore more Course
         </Link>
       </header>
-      {courses.length === 0 ? (
+      {userCourses.length === 0 ? (
         <h1 className="text-xl font-bold text-gold-900 mt-24 text-center">
           You haven't bought any course yet
         </h1>
       ) : (
         <div className="mt-8 grid grid-cols-3 gap-8">
-          {courses.map((course) => (
+          {userCourses.map((course) => (
             <CourseCard key={course._id} course={course} type={"user"} />
           ))}
         </div>

@@ -20,6 +20,7 @@ import {
 } from "react-router-dom";
 import Courses from "./components/user/Courses";
 import EditCourse from "./components/admin/EditCourse";
+import Admin from "./components/admin/Admin";
 
 function App() {
   const router = createBrowserRouter(
@@ -30,13 +31,15 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/course" element={<Courses />} />
-          <Route path="/user" element={<Dashboard />} />
+          <Route path="/:user/dashboard" element={<Dashboard />} />
           <Route path="/user/courses/:id" element={<SingleCourse />} />
         </Route>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/signup" element={<AdminSignup />} />
-        <Route path="/admin/courses" element={<AdminNavbar />}>
-          <Route index element={<AdminDashboard />} />
+
+        <Route path="/admin" element={<AdminNavbar />}>
+          <Route index element={<Admin />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/signup" element={<AdminSignup />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/courses/create" element={<CreateCourse />} />
           <Route path="/admin/courses/:id" element={<AdminSingleCourse />} />
           <Route path="/admin/courses/:id/edit" element={<EditCourse />} />
@@ -48,6 +51,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+
       <Outlet />
     </>
   );

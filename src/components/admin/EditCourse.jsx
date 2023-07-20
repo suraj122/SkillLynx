@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useRecoilValue } from "recoil";
+import { adminToken } from "../../common/RecoilAtom";
 
 function EditCourse() {
   const [message, setMessage] = useState("");
-  const token = localStorage.getItem("token");
   const course = useLocation().state.course;
   const [title, setTitle] = useState(course.title);
   const [tag, setTag] = useState(course.tag);
@@ -13,30 +15,33 @@ function EditCourse() {
   const [description, setDescription] = useState(course.description);
   const [published, setPublished] = useState(course.published);
   const id = useParams().id;
-  const handleSubmit = (e) => {
+  const token = useRecoilValue(adminToken);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { title, tag, price, imgLink, description, published };
-    axios
-      .put(`http://localhost:3000/admin/courses/${id}`, data, {
+    const response = await axios.put(
+      `http://localhost:3000/admin/courses/${id}`,
+      data,
+      {
         headers: {
           authorization: token,
         },
-      })
-      .then((res) => {
-        setMessage(res.data.message);
-        setTitle("");
-        setTag("");
-        setPrice(0);
-        setDescription("");
-        setImgLink("https://source.unsplash.com/random");
-        setPublished(false);
-      })
-      .catch((err) => console.error(err));
+      }
+    );
+
+    setMessage(response.data.message);
+    setTitle("");
+    setTag("");
+    setPrice(0);
+    setDescription("");
+    setImgLink("https://source.unsplash.com/random");
+    setPublished(false);
   };
 
   return (
     <section className="py-14 bg-fade-pink h-screen">
-      {token ? (
+      {token && jwt_decode(token).role ? (
         <>
           <h1 className="text-center text-royal-green-900 font-bold text-xl">
             Edit Course
@@ -45,7 +50,7 @@ function EditCourse() {
             <div className="text-center mt-4">
               <span className="text-lg text-gold-900">{message}</span>
               <br />
-              <Link className="text-lg text-gold-900" to="/admin/courses">
+              <Link className="text-lg text-gold-900" to="/admin/dashboard">
                 Go to your dashboard
               </Link>
             </div>

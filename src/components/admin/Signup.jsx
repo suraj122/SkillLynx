@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { adminAtom, adminToken } from "../../common/RecoilAtom";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const setAdmin = useSetRecoilState(adminAtom);
+  const setAdminToken = useSetRecoilState(adminToken);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +24,8 @@ function Signup() {
           setUsername("");
           setPassword("");
           localStorage.setItem("token", res.data.token);
+          setAdmin(username);
+          setAdminToken(res.data.token);
         })
         .catch((err) => setMessage("Admin already exists"));
     } else {
@@ -46,6 +52,7 @@ function Signup() {
         action=""
       >
         <input
+          autoFocus
           className="block w-full border border-royal-green-600 py-3 px-6 rounded my-4 text-royal-green-600 text-md"
           type="text"
           placeholder="Enter Username"

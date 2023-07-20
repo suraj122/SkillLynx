@@ -2,21 +2,27 @@ import { Link } from "react-router-dom";
 import Course from "../../common/CourseCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { adminCourseAtom } from "../../common/RecoilAtom";
 
 function Dashboard() {
   const token = localStorage.getItem("token");
-  const [courses, setCourses] = useState([]);
+  const adminCourses = useRecoilValue(adminCourseAtom);
+  const setAdminCourses = useSetRecoilState(adminCourseAtom);
   useEffect(() => {
-    setInterval(() => {
-      axios
-        .get("http://localhost:3000/admin/courses", {
-          headers: {
-            authorization: token,
-          },
-        })
-        .then((res) => setCourses(res.data.courses))
-        .catch((err) => console.error(err));
-    }, 1000);
+    if (token) {
+      if (jwt_decode(token).role === "admin") {
+        axios
+          .get("http://localhost:3000/admin/courses", {
+            headers: {
+              authorization: token,
+            },
+          })
+          .then((res) => setAdminCourses(res.data.courses))
+          .catch((err) => console.error(err));
+      }
+    }
   }, []);
   return (
     <section className="container mx-auto px-6 py-12">
@@ -30,9 +36,9 @@ function Dashboard() {
               Create Course
             </Link>
           </header>
-          {courses.length !== 0 ? (
+          {adminCourses.length !== 0 ? (
             <div className="mt-8 grid grid-cols-3 gap-8">
-              {courses.map((course) => (
+              {adminCourses.map((course) => (
                 <Course key={course._id} course={course} />
               ))}
             </div>

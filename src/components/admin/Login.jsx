@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSetRecoilState } from "recoil";
+import { adminAtom, adminToken } from "../../common/RecoilAtom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const setAdmin = useSetRecoilState(adminAtom);
+  const setAdminToken = useSetRecoilState(adminToken);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username && password) {
@@ -21,7 +24,9 @@ function Login() {
           setMessage(res.data.message);
           setUsername("");
           setPassword("");
+          setAdmin(username);
           localStorage.setItem("token", res.data.token);
+          setAdminToken(res.data.token);
         })
         .catch((err) => setMessage("Username or password must be correct"));
     } else {
@@ -38,7 +43,7 @@ function Login() {
         <div className="text-center mt-4">
           <span className="text-lg text-gold-900">{message}</span>
           <br />
-          <Link className="text-lg text-gold-900" to="/admin/courses">
+          <Link className="text-lg text-gold-900" to="/admin/dashboard">
             Go to your dashboard
           </Link>
         </div>
@@ -51,6 +56,7 @@ function Login() {
         action=""
       >
         <input
+          autoFocus
           className="block w-full border border-royal-green-600 py-3 px-6 rounded my-4 text-royal-green-600 text-md"
           type="text"
           value={username}

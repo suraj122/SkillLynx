@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userAtom, userCourseAtom } from "../../common/RecoilAtom";
+import jwt_decode from "jwt-decode";
 
 function Navbar() {
-  const [user, setUser] = useState("");
+  const user = useRecoilValue(userAtom);
+  const setUser = useSetRecoilState(userAtom);
   const token = localStorage.getItem("token");
+  const setUserCourses = useSetRecoilState(userCourseAtom);
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/users/me", {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => setUser(res.data))
-      .catch((err) => console.error(err));
+    if (token) {
+      if (jwt_decode(token).role === "user") {
+        axios
+          .get("http://localhost:3000/users/me", {
+            headers: {
+              authorization: token,
+            },
+          })
+          .then((res) => {
+            setUser(res.data);
+          })
+          .catch((err) => console.error(err));
+      }
+    }
   }, []);
   return (
     <>
@@ -55,6 +66,8 @@ function Navbar() {
                     className="text-md  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
                     onClick={() => {
                       localStorage.removeItem("token");
+                      setUser("");
+                      setUserCourses([]);
                     }}
                   >
                     Logout

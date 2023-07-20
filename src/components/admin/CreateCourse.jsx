@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useRecoilValue } from "recoil";
+import { adminToken } from "../../common/RecoilAtom";
 
 function Courses() {
   const [title, setTitle] = useState("");
@@ -10,32 +13,33 @@ function Courses() {
   const [description, setDescription] = useState("");
   const [published, setPublished] = useState(false);
   const [message, setMessage] = useState("");
-  const token = localStorage.getItem("token");
+  const token = useRecoilValue(adminToken);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { title, tag, price, imgLink, description, published };
-    axios
-      .post("http://localhost:3000/admin/courses", data, {
+    const response = await axios.post(
+      "http://localhost:3000/admin/courses",
+      data,
+      {
         headers: {
           authorization: token,
         },
-      })
-      .then((res) => {
-        setMessage(res.data.message);
-        setTitle("");
-        setTag("");
-        setPrice("");
-        setDescription("");
-        setImgLink("https://source.unsplash.com/random");
-        setPublished(false);
-      })
-      .catch((err) => setMessage(err.message));
+      }
+    );
+
+    setMessage(response.data.message);
+    setTitle("");
+    setTag("");
+    setPrice("");
+    setDescription("");
+    setImgLink("https://source.unsplash.com/random");
+    setPublished(false);
   };
 
   return (
     <section className="py-14 bg-fade-pink h-screen">
-      {token ? (
+      {token && jwt_decode(token).role === "admin" ? (
         <>
           <h1 className="text-center text-royal-green-900 font-bold text-xl">
             Create Course
@@ -44,7 +48,7 @@ function Courses() {
             <div className="text-center mt-4">
               <span className="text-lg text-gold-900">{message}</span>
               <br />
-              <Link className="text-lg text-gold-900" to="/admin/courses">
+              <Link className="text-lg text-gold-900" to="/admin/dashboard">
                 Go to your dashboard
               </Link>
             </div>

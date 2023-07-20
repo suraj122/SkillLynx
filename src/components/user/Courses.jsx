@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 function Courses() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
-    setInterval(() => {
-      axios
-        .get("http://localhost:3000/users/courses")
-        .then((res) => setCourses(res.data.courses))
-        .catch((err) => console.error(err));
-    }, 1000);
+    axios
+      .get("http://localhost:3000/users/courses")
+      .then((res) => setCourses(res.data.courses))
+      .catch((err) => console.error(err));
   }, []);
   return (
     <section className="container mx-auto px-6 py-12">

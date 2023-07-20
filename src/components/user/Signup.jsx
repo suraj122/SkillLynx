@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "../../common/RecoilAtom";
 
 function Signup() {
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const setUser = useSetRecoilState(userAtom);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +26,7 @@ function Signup() {
           setEmail("");
           setPassword("");
           localStorage.setItem("token", res.data.token);
+          setUser(username);
         })
         .catch((err) => setMessage("User already exists"));
     } else {
@@ -52,6 +56,7 @@ function Signup() {
         action=""
       >
         <input
+          autoFocus
           className="block w-full border border-royal-green-600 py-3 px-6 rounded my-4 text-royal-green-600 text-md"
           type="email"
           placeholder="Enter Email"
