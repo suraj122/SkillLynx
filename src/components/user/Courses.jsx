@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import axios from "axios";
 import Course from "../../common/CourseCard";
 import { useEffect, useState } from "react";

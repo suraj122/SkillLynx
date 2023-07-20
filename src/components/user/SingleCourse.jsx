@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../../common/RecoilAtom";
+import jwt_decode from "jwt-decode";
 
 function SingleCourse() {
   const [course, setCourse] = useState({});
@@ -21,14 +22,22 @@ function SingleCourse() {
   }, []);
 
   const handleClick = () => {
-    axios
-      .post(`http://localhost:3000/users/courses/${id}`, null, {
-        headers: {
-          authorization: token,
-        },
-      })
-      .then((res) => setMessage(res.data.message))
-      .catch((err) => console.error(err));
+    if (token) {
+      if (jwt_decode(token).role === "user") {
+        axios
+          .post(`http://localhost:3000/users/courses/${id}`, null, {
+            headers: {
+              authorization: token,
+            },
+          })
+          .then((res) => setMessage(res.data.message))
+          .catch((err) => console.error(err));
+      } else {
+        setMessage("You are not authenticated to buy any course");
+      }
+    } else {
+      setMessage("You are not authenticated to buy any course");
+    }
   };
 
   return (
@@ -53,7 +62,7 @@ function SingleCourse() {
             </strong>
           </div>
           {message ? (
-            <h1 className="text-xl font-bold text-gold-900 mt-24 text-center">
+            <h1 className="text-xl font-bold text-gold-900 mt-4 text-center">
               {message}
               <Link to={`/${user}/dashboard`}>Go to your dashbaord</Link>
             </h1>
