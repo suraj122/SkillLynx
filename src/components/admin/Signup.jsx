@@ -34,7 +34,7 @@ function Signup() {
   };
 
   return (
-    <section className="py-32 bg-fade-pink h-screen">
+    <section className="py-32 bg-fade-pink h-screen px-6">
       <h1 className="text-center text-royal-green-900 font-bold text-xl">
         Admin/Register
       </h1>

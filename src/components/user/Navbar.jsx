@@ -4,25 +4,28 @@ import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userAtom, userCourseAtom } from "../../common/RecoilAtom";
 import jwt_decode from "jwt-decode";
+import { CgMenuRight, CgClose } from "react-icons/cg";
 
 function Navbar() {
   const user = useRecoilValue(userAtom);
   const setUser = useSetRecoilState(userAtom);
   const token = localStorage.getItem("token");
   const setUserCourses = useSetRecoilState(userCourseAtom);
+  const [menu, setMenu] = useState(false);
+
+  const init = async () => {
+    const response = await axios.get("http://localhost:3000/users/me", {
+      headers: {
+        authorization: token,
+      },
+    });
+    setUser(response.data);
+  };
+
   useEffect(() => {
     if (token) {
       if (jwt_decode(token).role === "user") {
-        axios
-          .get("http://localhost:3000/users/me", {
-            headers: {
-              authorization: token,
-            },
-          })
-          .then((res) => {
-            setUser(res.data);
-          })
-          .catch((err) => console.error(err));
+        init();
       }
     }
   }, []);
@@ -34,34 +37,49 @@ function Navbar() {
             <strong className="text-gold-900">Skill</strong>
             <strong className="text-royal-green-900">Lynx</strong>
           </Link>
-          <ul className="flex items-center">
+          <button onClick={() => setMenu(!menu)} className="md:hidden">
+            <CgMenuRight className="text-2xl text-gold-900" />
+          </button>
+
+          <ul
+            className={`absolute  md:static md:flex items-center ${
+              menu
+                ? "bg-royal-green-900 w-1/2 right-0 z-10 h-auto top-0 py-16 pl-8"
+                : "hidden "
+            }`}
+          >
+            <li className="absolute top-8 right-8 md:hidden">
+              <button onClick={() => setMenu(!menu)}>
+                <CgClose className="text-2xl text-gold-900" />
+              </button>
+            </li>
             <li>
               <Link
-                className="text-md text-royal-green-900 hover:text-gold-900"
+                className="text-md text-white md:text-royal-green-900 hover:text-gold-900"
                 to="/"
               >
                 Home
               </Link>
             </li>
-            <li className="ml-6">
+            <li className="md:ml-6 mt-3 md:mt-0">
               <Link
-                className="text-md text-royal-green-900  hover:text-gold-900"
-                to="/course"
+                className="text-md text-white md:text-royal-green-900  hover:text-gold-900"
+                to="/courses"
               >
-                Course
+                Courses
               </Link>
             </li>
             {user ? (
               <>
-                <li className="ml-6">
+                <li className="md:ml-6 mt-3 md:mt-0">
                   <Link
-                    className="text-md text-royal-green-900  hover:text-gold-900"
+                    className="text-md text-white md:text-royal-green-900  hover:text-gold-900"
                     to="/login"
                   >
                     {user}
                   </Link>
                 </li>
-                <li className="ml-6">
+                <li className="md:ml-6 mt-3 md:mt-0">
                   <button
                     className="text-md  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
                     onClick={() => {
@@ -76,17 +94,17 @@ function Navbar() {
               </>
             ) : (
               <>
-                <li className="ml-6">
+                <li className="md:ml-6 mt-3 md:mt-0">
                   <Link
-                    className="text-md text-royal-green-900  hover:text-gold-900"
+                    className="text-md text-white md:text-royal-green-900  hover:text-gold-900"
                     to="/login"
                   >
                     Login
                   </Link>
                 </li>
-                <li className="ml-6">
+                <li className="md:ml-6 mt-3 md:mt-0">
                   <Link
-                    className="text-md  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
+                    className="text-md inline-block  border px-4 py-3 hover:bg-gold-900 hover:text-white rounded-full border-gold-900 text-gold-900"
                     to="/signup"
                   >
                     Register

@@ -33,12 +33,12 @@ function Courses() {
     setTag("");
     setPrice("");
     setDescription("");
-    setImgLink("https://source.unsplash.com/random");
+    setImgLink("");
     setPublished(false);
   };
 
   return (
-    <section className="py-14 bg-fade-pink h-screen">
+    <section className="py-14 bg-fade-pink h-screen px-6">
       {token && jwt_decode(token).role === "admin" ? (
         <>
           <h1 className="text-center text-royal-green-900 font-bold text-xl">

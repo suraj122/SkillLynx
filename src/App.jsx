@@ -21,6 +21,7 @@ import {
 import Courses from "./components/user/Courses";
 import EditCourse from "./components/admin/EditCourse";
 import Admin from "./components/admin/Admin";
+import { RecoilRoot } from "recoil";
 
 function App() {
   const router = createBrowserRouter(
@@ -30,7 +31,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/course" element={<Courses />} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="/:user/dashboard" element={<Dashboard />} />
           <Route path="/user/courses/:id" element={<SingleCourse />} />
         </Route>
@@ -50,8 +51,9 @@ function App() {
   );
   return (
     <>
-      <RouterProvider router={router} />
-
+      <RecoilRoot>
+        <RouterProvider router={router} />
+      </RecoilRoot>
       <Outlet />
     </>
   );

@@ -41,7 +41,7 @@ function Dashboard() {
           You haven't bought any course yet
         </h1>
       ) : (
-        <div className="mt-8 grid grid-cols-3 gap-8">
+        <div className="mt-8 grid md:grid-cols-3 gap-8">
           {userCourses.map((course) => (
             <CourseCard key={course._id} course={course} type={"user"} />
           ))}
