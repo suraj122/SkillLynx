@@ -44,9 +44,13 @@ function Login() {
         <div className="text-center mt-4">
           <span className="text-lg text-gold-900">{message}</span>
           <br />
-          <Link className="text-lg text-gold-900" to="/admin/dashboard">
-            Go to your dashboard
-          </Link>
+          {message === "Loggedin successfully" ? (
+            <Link className="text-lg text-gold-900" to="/admin/dashboard">
+              Go to dashboard
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         ""

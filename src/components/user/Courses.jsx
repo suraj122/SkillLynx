@@ -27,7 +27,7 @@ function Courses() {
         </div>
       ) : (
         <h2 className="text-3xl font-bold text-gold-900 text-center mt-32">
-          Loading...
+          No course listed
         </h2>
       )}
     </section>
