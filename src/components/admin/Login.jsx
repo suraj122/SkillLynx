@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { adminAtom, adminToken } from "../../common/RecoilAtom";
+import { ADMIN_LOGIN_URL } from "../../utils/constant";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ function Login() {
     e.preventDefault();
     if (username && password) {
       axios
-        .post("http://localhost:3000/admin/login", null, {
+        .post(ADMIN_LOGIN_URL, null, {
           headers: {
             username: username,
             password: password,

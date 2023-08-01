@@ -4,6 +4,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useRecoilValue } from "recoil";
 import { adminToken } from "../../common/RecoilAtom";
+import { ADMIN_COURSES_URL } from "../../utils/constant";
 
 function EditCourse() {
   const [message, setMessage] = useState("");
@@ -20,15 +21,11 @@ function EditCourse() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { title, tag, price, imgLink, description, published };
-    const response = await axios.put(
-      `http://localhost:3000/admin/courses/${id}`,
-      data,
-      {
-        headers: {
-          authorization: token,
-        },
-      }
-    );
+    const response = await axios.put(`${ADMIN_COURSES_URL}/${id}`, data, {
+      headers: {
+        authorization: token,
+      },
+    });
 
     setMessage(response.data.message);
     setTitle("");

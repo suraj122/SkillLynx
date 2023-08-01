@@ -5,6 +5,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { adminCourseAtom } from "../../common/RecoilAtom";
+import { ADMIN_COURSES_URL } from "../../utils/constant";
 
 function Dashboard() {
   const token = localStorage.getItem("token");
@@ -14,7 +15,7 @@ function Dashboard() {
     if (token) {
       if (jwt_decode(token).role === "admin") {
         axios
-          .get("http://localhost:3000/admin/courses", {
+          .get(ADMIN_COURSES_URL, {
             headers: {
               authorization: token,
             },

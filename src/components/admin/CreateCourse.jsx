@@ -4,12 +4,13 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useRecoilValue } from "recoil";
 import { adminToken } from "../../common/RecoilAtom";
+import { ADMIN_COURSES_URL } from "../../utils/constant";
 
 function Courses() {
   const [title, setTitle] = useState("");
   const [tag, setTag] = useState("");
   const [price, setPrice] = useState(0);
-  const [imgLink, setImgLink] = useState("https://source.unsplash.com/random");
+  const [imgLink, setImgLink] = useState("");
   const [description, setDescription] = useState("");
   const [published, setPublished] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,15 +19,11 @@ function Courses() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { title, tag, price, imgLink, description, published };
-    const response = await axios.post(
-      "http://localhost:3000/admin/courses",
-      data,
-      {
-        headers: {
-          authorization: token,
-        },
-      }
-    );
+    const response = await axios.post(ADMIN_COURSES_URL, data, {
+      headers: {
+        authorization: token,
+      },
+    });
 
     setMessage(response.data.message);
     setTitle("");

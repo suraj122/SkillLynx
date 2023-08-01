@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../../common/RecoilAtom";
 import jwt_decode from "jwt-decode";
+import { USER_COURSE_URL } from "../../utils/constant";
 
 function SingleCourse() {
   const [course, setCourse] = useState({});
@@ -14,7 +15,7 @@ function SingleCourse() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users/courses")
+      .get(USER_COURSE_URL)
       .then((res) =>
         setCourse(res.data.courses.find((course) => course._id === id))
       )
@@ -25,7 +26,7 @@ function SingleCourse() {
     if (token) {
       if (jwt_decode(token).role === "user") {
         axios
-          .post(`http://localhost:3000/users/courses/${id}`, null, {
+          .post(`${USER_COURSE_URL}/${id}`, null, {
             headers: {
               authorization: token,
             },
@@ -64,6 +65,7 @@ function SingleCourse() {
           {message ? (
             <h1 className="text-xl font-bold text-gold-900 mt-4 text-center">
               {message}
+              <br />
               <Link to={`/${user}/dashboard`}>Go to your dashbaord</Link>
             </h1>
           ) : (

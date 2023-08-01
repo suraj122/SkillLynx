@@ -9,12 +9,13 @@ import { PiSuitcaseSimpleFill, PiCertificateBold } from "react-icons/pi";
 import axios from "axios";
 import Course from "../common/CourseCard";
 import { Link } from "react-router-dom";
+import { USER_COURSE_URL } from "../utils/constant";
 
 function Home() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users/courses")
+      .get(USER_COURSE_URL)
       .then((res) => setCourses(res.data.courses))
       .catch((err) => console.error(err));
   }, []);
@@ -29,8 +30,9 @@ function Home() {
               Define Your Future
             </h1>
             <p className="text-lg text-royal-green-600 mt-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-              rerum libero placeat similique, voluptatum dolore tenetur.
+              Explore a world of opportunities and discover how continuous
+              personal and professional development can pave the way for a
+              successful and fulfilling journey ahead.
             </p>
             <Link
               to="/courses"
@@ -82,8 +84,8 @@ function Home() {
               Achive Your Goals With SkillLynx
             </h2>
             <p className="text-xl text-royal-green-600 text-center max-w-3xl mx-auto mt-8">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita
-              perspiciatis id omnis culpa natus? Enim veritatis incidunt
+              Unlock your full potential through SkillLynx's diverse courses and
+              expert guidance. Success awaits you!
             </p>
           </header>
           <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto mt-12">
@@ -96,8 +98,8 @@ function Home() {
                 Learn the latest skills
               </h3>
               <p className="text-base mt-4 text-royal-green-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                non iste accusantium animi.
+                Stay ahead with SkillLynx: Learn and master the latest in-demand
+                skills for a successful future.
               </p>
             </article>
             <article className="bg-[#F6FBF9] shadow-lg border-2 border-royal-green-300 p-8 rounded-xl">
@@ -108,8 +110,8 @@ function Home() {
                 Get ready for a career
               </h3>
               <p className="text-base mt-4 text-royal-green-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                non iste accusantium animi.
+                SkillLynx: Empowering your path to a rewarding career through
+                expert guidance and courses.
               </p>
             </article>
             <article className="bg-white border-2 border-royal-green-300 p-8 rounded-xl">
@@ -120,8 +122,8 @@ function Home() {
                 Earn a certificate
               </h3>
               <p className="text-base mt-4 text-royal-green-600">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                non iste accusantium animi.
+                SkillLynx: Gain recognition with certified courses for better
+                career opportunities.
               </p>
             </article>
           </div>
@@ -161,8 +163,8 @@ function Home() {
             Are you ready for today's course?
           </h2>
           <p className="text-white text-lg mt-6">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa,
-            asperiores atque? Sunt, sequi fugiat?
+            Get ready to embark on an enriching learning journey. Today's course
+            awaits, empowering your knowledge and skills.
           </p>
           <input
             className="border-b bg-transparent w-full max-w-sm mt-8 text-white py-2 outline-0"

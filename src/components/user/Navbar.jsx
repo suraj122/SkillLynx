@@ -14,11 +14,14 @@ function Navbar() {
   const [menu, setMenu] = useState(false);
 
   const init = async () => {
-    const response = await axios.get("http://localhost:3000/users/me", {
-      headers: {
-        authorization: token,
-      },
-    });
+    const response = await axios.get(
+      "https://skill-lynx-server.vercel.app/users/me",
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
     setUser(response.data);
   };
 

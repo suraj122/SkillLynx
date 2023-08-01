@@ -5,6 +5,7 @@ import CourseCard from "../../common/CourseCard";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userCourseAtom } from "../../common/RecoilAtom";
 import jwt_decode from "jwt-decode";
+import { USER_PURCHASED_URL } from "../../utils/constant";
 
 function Dashboard() {
   const token = localStorage.getItem("token");
@@ -14,7 +15,7 @@ function Dashboard() {
     if (token) {
       if (jwt_decode(token).role === "user") {
         axios
-          .get("http://localhost:3000/users/purchasedCourses", {
+          .get(USER_PURCHASED_URL, {
             headers: {
               authorization: token,
             },
@@ -32,7 +33,7 @@ function Dashboard() {
         <h1 className="text-xl font-bold text-royal-green-900">
           All Courses bought by You
         </h1>
-        <Link to="/course" className="btn btn-filled">
+        <Link to="/courses" className="btn btn-filled">
           Expore more Course
         </Link>
       </header>

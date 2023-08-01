@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { adminAtom, adminToken } from "../../common/RecoilAtom";
+import { ADMIN_SIGNUP_URL } from "../../utils/constant";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ function Signup() {
     e.preventDefault();
     if (username !== "" && password !== "") {
       axios
-        .post("http://localhost:3000/admin/signup", {
+        .post(ADMIN_SIGNUP_URL, {
           username: username,
           password: password,
         })
@@ -41,6 +42,10 @@ function Signup() {
       {message ? (
         <div className="text-center mt-4">
           <span className="text-lg text-gold-900">{message}</span>
+          <br />
+          <Link className="text-lg text-gold-900" to="/admin/dashboard">
+            Go to your dashboard
+          </Link>
         </div>
       ) : (
         ""

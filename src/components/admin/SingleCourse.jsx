@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ADMIN_COURSES_URL } from "../../utils/constant";
 
 function SingleCourse() {
   const [course, setCourse] = useState({});
@@ -10,7 +11,7 @@ function SingleCourse() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/admin/courses", {
+      .get(ADMIN_COURSES_URL, {
         headers: {
           authorization: token,
         },
@@ -28,7 +29,7 @@ function SingleCourse() {
   return (
     <section>
       <header
-        className="py-24 bg-cover bg-center"
+        className="py-24 bg-cover bg-center bg-royal-green-600"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${course.imgLink})`,
         }}

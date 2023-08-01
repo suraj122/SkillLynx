@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { ROOT_URL } from "../../utils/constant";
 import {
   adminAtom,
   adminCourseAtom,
@@ -19,7 +20,7 @@ function Navbar() {
     if (token) {
       if (jwt_decode(token).role === "admin") {
         axios
-          .get("http://localhost:3000/admin/me", {
+          .get(`${ROOT_URL}admin/me`, {
             headers: {
               authorization: token,
             },

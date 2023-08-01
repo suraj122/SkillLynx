@@ -1,12 +1,13 @@
 import axios from "axios";
 import Course from "../../common/CourseCard";
 import { useEffect, useState } from "react";
+import { USER_COURSE_URL } from "../../utils/constant";
 
 function Courses() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users/courses")
+      .get(USER_COURSE_URL)
       .then((res) => setCourses(res.data.courses))
       .catch((err) => console.error(err));
   }, []);

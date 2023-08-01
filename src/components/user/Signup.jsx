@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userAtom } from "../../common/RecoilAtom";
+import { USER_SIGNUP_URL } from "../../utils/constant";
 
 function Signup() {
   const [message, setMessage] = useState("");
@@ -16,7 +17,7 @@ function Signup() {
     e.preventDefault();
     if (email && username && password) {
       axios
-        .post("http://localhost:3000/users/signup", {
+        .post(USER_SIGNUP_URL, {
           email,
           username,
           password,
