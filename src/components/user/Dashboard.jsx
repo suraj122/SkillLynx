@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import CourseCard from "../../common/CourseCard";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userCourseAtom } from "../../common/RecoilAtom";
+import { userCourseAtom } from "../../store/atom";
 import jwt_decode from "jwt-decode";
 import { USER_PURCHASED_URL } from "../../utils/constant";
 

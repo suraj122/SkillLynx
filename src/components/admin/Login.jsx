@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
-import { adminAtom, adminToken } from "../../common/RecoilAtom";
+import { adminAtom, adminToken } from "../../store/atom";
 import { ADMIN_LOGIN_URL } from "../../utils/constant";
 
 function Login() {

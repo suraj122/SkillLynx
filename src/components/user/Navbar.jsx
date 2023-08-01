@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userAtom, userCourseAtom } from "../../common/RecoilAtom";
+import { userAtom, userCourseAtom } from "../../store/atom";
 import jwt_decode from "jwt-decode";
 import { CgMenuRight, CgClose } from "react-icons/cg";
 

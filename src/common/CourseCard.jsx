@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { userAtom } from "./RecoilAtom";
+import { userAtom } from "../store/atom";
 
 function CourseCard({ course, type }) {
   return (

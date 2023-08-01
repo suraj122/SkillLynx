@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userAtom } from "../../common/RecoilAtom";
+import { userAtom } from "../../store/atom";
 import jwt_decode from "jwt-decode";
 import { USER_COURSE_URL } from "../../utils/constant";
 
@@ -63,11 +63,21 @@ function SingleCourse() {
             </strong>
           </div>
           {message ? (
-            <h1 className="text-xl font-bold text-gold-900 mt-4 text-center">
+            <h2 className="text-xl font-bold text-gold-900 mt-4 text-center">
               {message}
               <br />
-              <Link to={`/${user}/dashboard`}>Go to your dashbaord</Link>
-            </h1>
+              {token ? (
+                <>
+                  {jwt_decode(token).role === "user" ? (
+                    <Link to={`/${user}/dashboard`}>Go to your dashbaord</Link>
+                  ) : (
+                    <Link to={`/login`}>Please login to buy course</Link>
+                  )}
+                </>
+              ) : (
+                ""
+              )}
+            </h2>
           ) : (
             ""
           )}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { adminCourseAtom } from "../../common/RecoilAtom";
+import { adminCourseAtom } from "../../store/atom";
 import { ADMIN_COURSES_URL } from "../../utils/constant";
 
 function Dashboard() {

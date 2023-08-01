@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useRecoilValue } from "recoil";
-import { adminToken } from "../../common/RecoilAtom";
+import { adminToken } from "../../store/atom";
 import { ADMIN_COURSES_URL } from "../../utils/constant";
 
 function Courses() {

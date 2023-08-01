@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userAtom } from "../../common/RecoilAtom";
+import { userAtom } from "../../store/atom";
 import { USER_SIGNUP_URL } from "../../utils/constant";
 
 function Signup() {

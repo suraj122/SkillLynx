@@ -3,11 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ROOT_URL } from "../../utils/constant";
-import {
-  adminAtom,
-  adminCourseAtom,
-  adminToken,
-} from "../../common/RecoilAtom";
+import { adminAtom, adminCourseAtom, adminToken } from "../../store/atom";
 import jwt_decode from "jwt-decode";
 
 function Navbar() {
